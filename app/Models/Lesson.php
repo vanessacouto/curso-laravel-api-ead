@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Support;
 use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,4 +16,9 @@ class Lesson extends Model
     protected $keyType = 'uuid';
 
     protected $fillable = ['name', 'description', 'video'];
+
+    public function supports()
+    {
+        return $this->hasMany(Support::class);
+    }
 }
