@@ -7,6 +7,8 @@ use App\Http\Requests\StoreSupport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SupportResource;
 use App\Repositories\SupportRepository;
+use App\Http\Requests\StoreReplySupport;
+use App\Http\Resources\ReplySupportResource;
 
 class SupportController extends Controller
 {
@@ -28,7 +30,7 @@ class SupportController extends Controller
         return SupportResource::collection($supports);
     }
 
-    // o metodo recebe o 'StoreSupport', que é onde colcamos nossas 'rules'
+    // o metodo recebe o 'StoreSupport', que é onde colocamos nossas 'rules'
     public function store(StoreSupport $request)
     {
         $support = $this->repository
@@ -37,4 +39,11 @@ class SupportController extends Controller
         return new SupportResource($support);
     }
 
+    // cria uma nova resposta para uma dúvida (support)
+    public function createReply(StoreReplySupport $request, $supportId)
+    {
+        $reply = $this->repository->createReplyToSupportId($supportId, $request->validated());
+        
+        return new ReplySupportResource($reply);
+    }
 }

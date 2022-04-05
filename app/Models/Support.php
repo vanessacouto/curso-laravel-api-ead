@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Lesson;
+use App\Models\ReplySupport;
 use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,5 +33,10 @@ class Support extends Model
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(ReplySupport::class);
     }
 }

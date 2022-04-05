@@ -17,11 +17,13 @@ class SupportResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'status' => $this->status,
             'status_label' => $this->statusOptions[$this->status] ?? 'Status Not Found', // se existe status retorna, senão retorna 'not found'
             'description' => $this->description,
             'user' => new UserResource($this->user),
-            'lesson' => new LessonResource($this->lesson)
+            'lesson' => new LessonResource($this->lesson),
+            'replies' => LessonResource::collection($this->replies),
         ];
     }
 }
