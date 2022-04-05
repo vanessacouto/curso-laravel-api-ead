@@ -3,10 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Support;
-use App\Models\User;
+use App\Repositories\Traits\RepositoryTrait;
 
 class SupportRepository
 {
+    use RepositoryTrait;
+
     protected $entity;
 
     // no construtor, injeta o model que esse repository vai trabalhar
@@ -53,33 +55,10 @@ class SupportRepository
         return $support;
     }
 
-    public function createReplyToSupportId(string $supportId, array $data)
-    {
-        $user = $this->getUserAuth();
-
-        $reply = $this->getSupport($supportId)
-            ->replies()
-            ->create([
-                'description' => $data['description'],
-                'user_id' => $user->id,
-            ]);
-
-        return $reply;
-    }
-
     // metodo que retorna um 'support' a partir de um 'id'
     private function getSupport(string $id)
     {
         // se nao encontrar o id, retorna erro 404
         return $this->entity->findOrFail($id);
-    }
-
-    // pegar usuário autenticado
-    private function getUserAuth(): User
-    {
-        // quando tiver usuario autenticado
-        //return auth()->user();
-
-        return User::first();
     }
 }

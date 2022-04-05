@@ -7,8 +7,6 @@ use App\Http\Requests\StoreSupport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SupportResource;
 use App\Repositories\SupportRepository;
-use App\Http\Requests\StoreReplySupport;
-use App\Http\Resources\ReplySupportResource;
 
 class SupportController extends Controller
 {
@@ -26,7 +24,7 @@ class SupportController extends Controller
     {
         // '$request->all()': tudo que vier de parametro pela url é enviado
         $supports = $this->repository->getSupports($request->all());
-        
+
         return SupportResource::collection($supports);
     }
 
@@ -34,16 +32,8 @@ class SupportController extends Controller
     public function store(StoreSupport $request)
     {
         $support = $this->repository
-                        ->createNewSupport($request->validated()); // $request->validated(): pega o que foi validado
+            ->createNewSupport($request->validated()); // $request->validated(): pega o que foi validado
 
         return new SupportResource($support);
-    }
-
-    // cria uma nova resposta para uma dúvida (support)
-    public function createReply(StoreReplySupport $request, $supportId)
-    {
-        $reply = $this->repository->createReplyToSupportId($supportId, $request->validated());
-        
-        return new ReplySupportResource($reply);
     }
 }
