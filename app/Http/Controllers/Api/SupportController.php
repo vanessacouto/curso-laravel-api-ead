@@ -36,4 +36,13 @@ class SupportController extends Controller
 
         return new SupportResource($support);
     }
+
+    // retorna somente as duvidas do usuario autenticado
+    public function mySupports(Request $request)
+    {
+        // '$request->all()': tudo que vier de parametro pela url é enviado
+        $supports = $this->repository->getMySupports($request->all());
+
+        return SupportResource::collection($supports);
+    }
 }
