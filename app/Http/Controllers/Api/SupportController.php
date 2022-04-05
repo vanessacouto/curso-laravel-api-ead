@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreSupport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SupportResource;
 use App\Repositories\SupportRepository;
@@ -26,4 +27,14 @@ class SupportController extends Controller
         
         return SupportResource::collection($supports);
     }
+
+    // o metodo recebe o 'StoreSupport', que é onde colcamos nossas 'rules'
+    public function store(StoreSupport $request)
+    {
+        $support = $this->repository
+                        ->createNewSupport($request->validated()); // $request->validated(): pega o que foi validado
+
+        return new SupportResource($support);
+    }
+
 }

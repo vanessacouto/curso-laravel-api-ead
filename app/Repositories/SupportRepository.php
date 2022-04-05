@@ -38,6 +38,21 @@ class SupportRepository
             ->get();
     }
 
+    public function createNewSupport(array $data): Support
+    {
+        // insere a partir do usuário autenticado
+        $support = $this->getUserAuth()
+            ->supports()
+            ->create([
+                'lesson_id' => $data['lesson'],
+                'description' => $data['description'],
+                'status' => $data['status'],
+            ]);
+
+        return $support;
+    }
+
+
     // pegar usuário autenticado
     private function getUserAuth(): User
     {

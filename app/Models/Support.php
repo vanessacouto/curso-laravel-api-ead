@@ -16,7 +16,7 @@ class Support extends Model
 
     protected $keyType = 'uuid';
 
-    protected $fillable = ['status', 'description']; // o status vai ser um enum
+    protected $fillable = ['status', 'description', 'lesson_id']; // o status vai ser um enum
 
     public $statusOptions = [
         'P' => 'Pendente, Aguardando Professor',
