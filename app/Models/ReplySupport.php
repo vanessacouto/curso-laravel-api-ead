@@ -20,6 +20,8 @@ class ReplySupport extends Model
 
     protected $table = 'reply_support';
 
+    protected $touches = ['support']; // indica qual relacionamento 'tocar': toda vez que alterar algo na resposta, vai 'tocar' o relacionamento 'support' (vai atualizar o timestamps de 'suppor')
+
     public function support()
     {
         return $this->belongsTo(Support::class);

@@ -35,6 +35,7 @@ class SupportRepository
                     $query->where('description', 'LIKE', "%{$filter}%"); // filtra pelo parametro passado
                 }
             })
+            ->orderBy('updated_at')
             ->get();
     }
 
