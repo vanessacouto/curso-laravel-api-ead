@@ -6,12 +6,9 @@ use App\Models\User;
 
 trait RepositoryTrait
 {
-    // pegar usuário autenticado
+    // retorna o usuário autenticado
     private function getUserAuth(): User
     {
-        // quando tiver usuario autenticado
-        //return auth()->user();
-
-        return User::first();
+        return auth()->user();
     }
 }
