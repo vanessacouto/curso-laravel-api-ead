@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/auth', [AuthController::class, 'auth']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum'); // insere o middleware, pois precisa estar logado para deslogar
+Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 
 // nesse grupo estarao todas as rotas que precisam de autenticacao
 Route::middleware('auth:sanctum')->group(function () {

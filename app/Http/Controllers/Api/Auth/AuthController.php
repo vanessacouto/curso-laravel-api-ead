@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -45,5 +46,12 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function me()
+    {
+        $me = auth()->user();
+
+        return new UserResource($me);
     }
 }
