@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\View;
 use App\Models\Support;
 use App\Models\Traits\UuidTrait;
 use Laravel\Sanctum\HasApiTokens;
@@ -57,5 +58,10 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function views()
+    {
+        return $this->hasMany(View::class);
     }
 }

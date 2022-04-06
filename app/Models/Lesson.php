@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\View;
 use App\Models\Support;
 use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -20,5 +21,17 @@ class Lesson extends Model
     public function supports()
     {
         return $this->hasMany(Support::class);
+    }
+
+    public function views()
+    {
+        return $this->hasMany(View::class)
+            ->where(function ($query) {
+                // só aplica esse 'where' se o usuário estiver autenticado
+                if (auth()->check()) {
+                    // quando usuário está logado só exibe o total de visualizações do usuário e não o total geral de visualizações por todos da plataforma
+                    return $query->where('user_id', auth()->user()->id);
+                }
+            });
     }
 }
