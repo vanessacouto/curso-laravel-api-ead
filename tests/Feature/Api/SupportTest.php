@@ -2,8 +2,9 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Support;
 use Tests\TestCase;
+use App\Models\Lesson;
+use App\Models\Support;
 use Tests\Feature\Api\UtilsTrait;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,6 +39,43 @@ class SupportTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-                    ->assertJsonCount(50, 'data'); // criamos 100 'supports', mas só 50 são do usuário autenticado
+            ->assertJsonCount(50, 'data'); // criamos 100 'supports', mas só 50 são do usuário autenticado
+    }
+
+    public function test_get_supports_unauthenticated()
+    {
+        $response = $this->getJson('/supports');
+
+        $response->assertStatus(401);
+    }
+
+    public function test_get_supports()
+    {
+        Support::factory()->count(50)->create();
+
+        $response = $this->getJson('/supports', $this->defaultHeaders());
+
+        $response->assertStatus(200)
+            ->assertJsonCount(50, 'data');
+    }
+
+    public function test_get_supports_filter_lesson()
+    {
+        $lesson = Lesson::factory()->create();
+
+        Support::factory()->count(50)->create();
+
+        // cria 10 supports especificando a aula
+        Support::factory()->count(10)->create([
+            'lesson_id' => $lesson->id
+        ]);
+
+        $payload = ['lesson' => $lesson->id];
+
+        // método 'json': passamos o verbo HTTP, a url, os dados e a Header
+        $response = $this->json('GET', '/supports', $payload, $this->defaultHeaders());
+
+        $response->assertStatus(200)
+            ->assertJsonCount(10, 'data'); // criamos 60 'supports', mas estamos filtrando 10 'supports' especificos
     }
 }
