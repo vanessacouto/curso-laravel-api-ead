@@ -24,7 +24,7 @@ class ReplySupportRepository
 
         $reply = $this->entity
             ->create([
-                'support_id' => $data['support_id'],
+                'support_id' => $data['support'],
                 'description' => $data['description'],
                 'user_id' => $user->id,
             ]);

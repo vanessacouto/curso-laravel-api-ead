@@ -25,7 +25,7 @@ class StoreReplySupport extends FormRequest
     {
         return [
             'description' => ['required', 'min:3', 'max:10000'],
-            'support_id' => ['required', 'exists:reply_support,support_id'], // o valor deve existir no campo 'support_id' na tabela 'reply_support'
+            'support' => ['required', 'exists:supports,id'], // o valor deve existir no campo 'support_id' na tabela 'reply_support'
         ];
     }
 }
