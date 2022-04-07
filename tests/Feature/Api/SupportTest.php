@@ -78,4 +78,33 @@ class SupportTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonCount(10, 'data'); // criamos 60 'supports', mas estamos filtrando 10 'supports' especificos
     }
+
+    public function test_create_support_unauthenticated()
+    {
+        $response = $this->postJson('/supports');
+
+        $response->assertStatus(401);
+    }
+
+    public function test_create_support_error_validations()
+    {
+        $response = $this->postJson('/supports', [], $this->defaultHeaders());
+
+        $response->assertStatus(422);
+    }
+
+    public function test_create_support()
+    {
+        $lesson = Lesson::factory()->create();
+
+        $payload = [
+            'lesson' => $lesson->id,
+            'status' => 'P',
+            'description' => 'Description Test',
+        ];
+
+        $response = $this->postJson('/supports', $payload, $this->defaultHeaders());
+
+        $response->assertStatus(201);
+    }
 }
