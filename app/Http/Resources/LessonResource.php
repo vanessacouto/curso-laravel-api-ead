@@ -19,6 +19,7 @@ class LessonResource extends JsonResource
             'name' => ucwords(strtolower($this->name)), // converte tudo pra minusculo e depois cada inicial para maiuscula
             'description' => $this->description,
             'video' => $this->video,
+            'views' => $this->views
         ];
     }
 }

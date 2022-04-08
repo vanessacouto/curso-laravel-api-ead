@@ -17,6 +17,7 @@ class ModuleResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => ucwords(strtolower($this->name)), // converte tudo pra minusculo e depois cada inicial para maiuscula
+            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),
         ];
     }
 }

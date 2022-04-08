@@ -18,6 +18,7 @@ class ModuleRepository
     public function getModulesByCourseId(string $courseId)
     {
         return $this->entity
+                    ->with('lessons.views') // vai trazer as lessons e as views
                     ->where('course_id', $courseId)
                     ->get();
     }

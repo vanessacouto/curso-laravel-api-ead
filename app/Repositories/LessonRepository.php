@@ -22,6 +22,7 @@ class LessonRepository
     {
         return $this->entity
             ->where('module_id', $moduleId)
+            ->with('supports.replies') // vai trazer a aula, os supports e as respostas dos supports (apenas 3 consultas)
             ->get();
     }
 

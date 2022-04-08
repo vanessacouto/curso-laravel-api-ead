@@ -50,6 +50,7 @@ class SupportRepository
                             $query->where('description', 'LIKE', "%{$filter}%"); // filtra pelo parametro passado
                         }
                     })
+                    ->with('replies')
                     ->orderBy('updated_at')
                     ->get();
     }
