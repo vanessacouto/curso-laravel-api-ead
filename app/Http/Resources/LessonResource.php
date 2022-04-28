@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ViewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LessonResource extends JsonResource
@@ -19,7 +20,7 @@ class LessonResource extends JsonResource
             'name' => ucwords(strtolower($this->name)), // converte tudo pra minusculo e depois cada inicial para maiuscula
             'description' => $this->description,
             'video' => $this->video,
-            'views' => $this->views
+            'views' => ViewResource::collection($this->whenLoaded('views')), // só vai trazer os 'views' quando requisitado no 'with'
         ];
     }
 }
